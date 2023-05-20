@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tupoiu</title>
+	<link rel="stylesheet" type="text/css" href="main.css"/>
+    <script>
+        window.onload = function(){
+            setAge();
+        }
+        function setAge(){
+            var dob = new Date(document.getElementById("dob").textContent);
+            var now = Date.now();
+            const secondsInAYear = 365.25*24*60*60;
+            document.getElementById("age").innerHTML = (Date.now() - dob.getTime())/(secondsInAYear*1000);
+        }
+    </script>
+</head>
+<body>
+	<h1></h1>
+	<table>
+        <thead>
+            <tr>
+                <th>Date of birth</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="dob">2000-12-17</td>
+                <td id="age">Data 3</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="eop">
+        <a href="index.html">Go back home</a>
+    	<p id="footer">&copy; Peter Job 2022</p>
+    </div>
+</body>
+</html>

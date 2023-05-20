@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+<head>
+	<title>Tupoiu - Guitar Tools</title>
+	<link rel="stylesheet" type="text/css" href="main.css"/>
+    <link rel="stylesheet" type="text/css" href="guitar.css"/>
+    <script>
+        var bpm;
+        var timesig;
+        var primary;
+        var secondary;
+        var metronome;
+        var timer;
+        var timer_updater;
+        var started_time;
+        window.onload = function(){
+            primary = new Audio("assets/secondary_beat.wav");
+            timeout_aud = new Audio("assets/timer_done.wav");
+            bpm = 100;
+            document.getElementById("bpmbox").value = bpm;
+            document.getElementById("timeleft").value = "Time Left: 00:00:00";
+        }
+        
+        function startMetronome(){
+            stopMetronome();
+            bpm = document.getElementById("bpmbox").value;
+            if (!bpm || bpm < 20 || bpm > 400){
+                bpm = 100;
+                document.getElementById("bpmbox").value = bpm;
+            }
+            primaryClick();
+            metronome = setInterval(primaryClick, 60000/bpm);
+        }
+        function stopMetronome(){
+            clearInterval(metronome);
+        }
+        function startTimer(t = -1){
+            stopTimer();
+            if (t == -1){
+                time = document.getElementById("timebox").value
+            }else{
+                time = t;
+            }
+            if (!time || time < 1){
+                time = 3*60;
+                document.getElementById("timebox").value = time;
+            }
+            started_time = performance.now();
+            updateTime();
+            timer_updater = setInterval(updateTime, 1000);
+            timer = setTimeout(timeout, time*1000);
+        }
+        function stopTimer(){
+            clearTimeout(timer);
+            clearInterval(timer_updater);
+        }
+        function updateTime(){
+            secs_left = (time-Math.floor((performance.now()-started_time)/1000))
+            document.getElementById("timeleft").textContent = "Time Left: " + (secs_left-(secs_left%60))/60 + ":" + secs_left%60;
+        }
+        function primaryClick(){
+            primary.play();
+        }
+        function timeout(){
+            timeout_aud.play();
+        }
+    </script>
+</head>
+<body>
+	<h1 class="guitar-header">Guitar Tools</h1>
+	<div id="metronome">
+        <button onclick="startMetronome()">Start metronome</button>
+        <button onclick="stopMetronome()">Stop metronome</button>
+        <label>
+            BPM:
+            <input type="text" pattern="[0-9]*" id="bpmbox"></input>
+        </label>
+    </div>
+    <div id="timer">
+        <button onclick="startTimer()">Start timer</button>
+        <button onclick="stopTimer()">Stop timer</button>
+        <label>
+            Set time for timer:
+            <input type="text" pattern="[0-9]*" id="timebox"></input>
+            <p id="timeleft"></p>
+        </label>
+        
+        <button class="breaktime" onclick="startTimer(180)">3 min break!</button>
+        <button class="playtime" onclick="startTimer(600)">10 min playing!</button>
+    <div class="eop">
+        <a href="index.html">Go back home</a>
+    	<p id="footer">&copy; Peter Job 2022</p>
+    </div>
+</body>
+</html>

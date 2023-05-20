@@ -1,0 +1,108 @@
+body {
+	height: 100%;
+	margin: 0;
+	text-align: center;
+	width: 100%;
+}
+
+h1 {
+    font-size: 32px;
+    color: rgb(46,106,163);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h2 {
+	font-size: 56px;
+}
+
+
+.hero {
+	padding: 250px 0;
+	margin: 30px;
+}
+
+
+.hero p {
+  font-size: 2rem;
+  font-family: Garamond, serif;
+}
+
+.hero a {
+	color: #0030AA;
+    font-family: Garamond, serif;
+	text-decoration: none;
+	font-size: 24px;
+	animation: welcome 2s infinite;
+}
+
+.eop a {
+	color: #0030AA;
+	font-size: 1rem;
+    font-family: Garamond, serif;
+	text-decoration: none;
+}
+
+#guitar-link {
+	color: #DD2222;
+	font-size: 1rem;
+    font-family: Garamond, serif;
+	text-decoration: none;
+	animation: pulsate 3s infinite;
+    opacity: 0.5;
+}
+
+.breaktime {
+    color: #FFFFFF;
+	font-size: 1rem;
+    font-family: Garamond, serif;
+	text-decoration: none;
+    background: linear-gradient(to bottom, #227700, #00BB88);
+}
+
+.playtime {
+    color: #FFFFFF;
+	font-size: 1rem;
+    font-family: Garamond, serif;
+	text-decoration: none;
+    background: linear-gradient(to bottom, #FF7700, #DD0055);
+}
+
+@keyframes pulsate {
+    0% { 
+        opacity: 0.5;
+    }
+    50% { 
+        opacity: 1.0;
+    }
+    100% { 
+        opacity: 0.5;
+    }
+}
+
+@keyframes welcome {
+	0% { 
+        font-size: 24px;
+    }
+    5% { 
+        font-size: 26px;
+    }
+	10% { 
+        font-size: 22px;
+    }
+	15% { 
+        font-size: 26px;
+    }
+	20% { 
+        font-size: 22px;
+    }
+	25% { 
+        font-size: 24px;
+    }
+    100% { 
+        font-size: 24px;
+    }
+}
+
+#footer {
+    font-size: 1rem;
+}
