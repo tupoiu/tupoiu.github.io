@@ -4,8 +4,14 @@
 	<title>Tupoiu</title>
 	<link rel="stylesheet" type="text/css" href="main.css"/>
 	<script src="libs/jquery-3.7.0.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 	<script src="scripts/vfx.js"></script>
+	<script src="scripts/hacker_text.js"></script>
+	<script>
+		function toggleDarkMode() {
+			let body = document.body;
+			body.classList.toggle("dark-mode"); // See main.css
+		}
+	</script>
 	
 </head>
 <body>
@@ -13,8 +19,15 @@
 	<div style="display:inline">
 		<input type="file" id="imageFile" accept=".png">
 		<p id="loading">Loading...</p>
+		<button onclick="toggleDarkMode()">Dark mode</button>
 	</div>
 	<hr>
 	<canvas id="canvas" style="scale: 1"></canvas>
+
+	<div class="eop">
+		<a href="index.html">Home</a>
+		<a href="guitar.html" id="guitar-link">Guitar</a>
+		<a href="visuals.html">Visuals</a>
+	</div>
 </body>
 </html>

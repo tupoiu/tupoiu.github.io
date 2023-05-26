@@ -5,6 +5,11 @@ body {
 	width: 100%;
 }
 
+.dark-mode {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
 h1 {
     font-size: 32px;
     color: rgb(46,106,163);
@@ -40,6 +45,10 @@ h2 {
 	font-size: 1rem;
     font-family: Garamond, serif;
 	text-decoration: none;
+}
+
+.eop a:hover {
+    background-color: #DDDDFF;
 }
 
 #guitar-link {

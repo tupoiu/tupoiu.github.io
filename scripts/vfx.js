@@ -6,13 +6,15 @@ let t = 0;
 let canvas, context;
 let loadingText;
 let scale_factor = 1/2;
-const max_width = 500;
-const max_height = 500;
+const max_width = 100;
+const max_height = 100;
 function clamp_WH(width,height){
     let sf = Math.min(max_width/width, max_height/height);
     sf = Math.min(1, sf);
     return [width*sf >>0, height*sf >>0];
 }
+
+// Initialisation (and loading default image)
 
 window.onload = async function(){
 
@@ -81,7 +83,6 @@ function handleFileSelect(event) { // File upload event handler
 
     var reader = new FileReader();
     reader.onload = function(e) {
-        console.log("We made it here");
         newImage = new Image();
         newImage.crossOrigin = "anonymous";
         newImage.src = e.target.result;
