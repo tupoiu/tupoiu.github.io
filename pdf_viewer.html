@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tupoiu</title>
+	<link rel="stylesheet" type="text/css" href="main.css"/>
+	<script src="libs/jquery-3.7.0.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+	<script>
+		function toggleDarkMode() {
+			let body = document.body;
+			body.classList.toggle("dark-mode"); // See main.css
+		}
+	</script>
+	
+</head>
+<body>
+	<h1>PDF Viewer</h1>
+    <button onclick="toggleDarkMode()">Dark mode</button>
+    <div>
+        <iframe style="width: 50vw; height: 40vh;" src="https://s29.q4cdn.com/175625835/files/doc_downloads/test.pdf"></iframe>
+    </div>
+
+	<div class="eop">
+		<a href="index.html">Home</a>
+		<a href="guitar.html" id="guitar-link">Guitar</a>
+		<a href="visuals.html">Visuals</a>
+	</div>
+</body>
+</html>

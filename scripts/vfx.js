@@ -5,9 +5,9 @@ let loop;
 let t = 0;
 let canvas, context;
 let loadingText;
-let scale_factor = 1/2;
-const max_width = 100;
-const max_height = 100;
+let scale_factor = 1;
+const max_width = 400;
+const max_height = 400;
 function clamp_WH(width,height){
     let sf = Math.min(max_width/width, max_height/height);
     sf = Math.min(1, sf);
