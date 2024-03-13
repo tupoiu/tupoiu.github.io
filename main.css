@@ -76,6 +76,21 @@ h2 {
     background: linear-gradient(to bottom, #FF7700, #DD0055);
 }
 
+#blogs {
+    text-align: left;
+    margin: 1rem;
+}
+
+#blog-container {
+    width: 50%;
+    margin: auto;
+    display: flexbox;
+}
+
+code {
+    white-space: pre;
+}
+
 @keyframes pulsate {
     0% { 
         opacity: 0.5;

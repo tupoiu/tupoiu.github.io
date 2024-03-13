@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tupoiu</title>
+	<link rel="stylesheet" type="text/css" href="main.css"/>
+</head>
+<body>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+	<!-- and it's easy to individually load additional languages -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/haskell.min.js"></script>
+
+	<script>hljs.highlightAll();</script>
+	<h1>Blogs</h1>
+	<div id="blog-container">
+    <div id="blogs">
+
+<h3>Blockchains and Merkel trees</h3><br>Prereqs:<br>- Hashing<br>- Linked List<br><br>You need a blockchain for success. It's a simple fact of life. This article will tell you what one is, and how to make one.<br><br>A linked list is a value, and a pointer to the next list (or some "end of list", which is often written as None, Nil, or []).<br><pre><code class='language-haskell'>-- Linked list with values of type "a" in Haskell
+data LinkedList a = Node {val :: a, next :: LinkedList a}
+                  | EndOfList
+
+-- The same thing written more concisely
+data List a = Cons a (List a)
+            | Nil
+</code></pre><br><br>A blockchain is very similar, but as well as storing the value of a node and the pointer to the next list, we store a the *hash* of the value of the previous node. <br><br>Say you wanted to have a blockchain with a list of names of people who you have high fived, whilst ensuring that no one could falsely claim that you'd high fived them by modifying the earlier elements of the list. You could store the names as a blockchain.<br><br><pre><code class='language-haskell'>hash :: String -> Int
+hash = (`mod` 128) . sum . map fromEnum
+
+data Blockchain = Node String Int Blockchain
+                | EndNode Int
+                deriving Show -- To be able print the data in Haskell
+</code></pre><br><br>Looks pretty similar to the linked list from earlier... We will store the hash of each string value as an Int for ease of use. So can we create a blockchain from a list of strings?<br><br><pre><code class='language-haskell'>fromList :: [String] -> Blockchain
+fromList xs = fromListAux xs 0
+    where
+        fromListAux [] prevHash = EndNode prevHash
+        fromListAux (h:t) prevHash = Node h prevHash (fromListAux t (hash h))
+</code></pre><br><br>In Haskell <code>(h:t)</code> is a pattern matching on the first element of the list (the "head") and the rest (the "tail"). So what would an example blockchain look like?<br><br><pre><code class='language-haskell'>exampleBlockchain = fromList ["Sam", "Rich"]
+-- Node "Sam" 0 (Node "Rich" 33 (EndNode 6))
+</code></pre><br>Note that <code>hash "Sam" == 33</code> and <code>hash "Rich" == 6</code>. If anyone tries to mess with the names in the list, say by inserting a new one, then the chance that the EndNode will be valid is very unlikely.<br><br><pre><code class='language-haskell'>validate :: Blockchain -> Bool
+validate (EndNode 0) = True
+validate (EndNode _) = False
+validate chain = go chain 0 -- Valid chains start with 0
+    where
+        go (Node val expectedHash rest) prevHash = (expectedHash == prevHash) && go rest (hash val)
+        go (EndNode lastHash) expectedHash = lastHash == expectedHash
+</code></pre><br>This validate function lets us check whether the hashes of each node line up.<br><pre><code class='language-haskell'>validate (Node "Sam" 0 (Node "Rich" 33 (EndNode 6)))
+-- True
+
+validate (Node "Sam" 0 (Node "Ron" 33 (EndNode 6)))
+-- False, hash "Ron" is 47, not 6
+</code></pre><br>This means that if we know the hash in the EndNode, we can be confident in validating the whole chain. You'll notice that validating a blockchain requires looking at every node (if the validation doesn't exit on a failure early). To prevent this, in real usecases, people use alternative data structures, like Merkel trees, which can be validated by only looking at <code>log n</code> nodes.
+
+	</div>
+	</div>
+	<div class="eop">
+		<a href="guitar.html" id="guitar-link">Guitar</a>
+		<a href="visuals.html">Visuals</a>
+	</div>
+	<p id="footer">&copy; Peter Job 2022</p>
+</body>
+</html>
