@@ -14,9 +14,12 @@
 	<script>hljs.highlightAll();</script>
 	<h1>Blogs</h1>
 	<div id="blog-container">
+	<div id="blog-contents">
+<a href='#13-03-2024-blockchain-basics.md'>- 13-03-2024-blockchain-basics.md</a><br><a href='#29-03-2024-social-media-and-lobbies.md'>- 29-03-2024-social-media-and-lobbies.md</a><br><a href='#things_ive_read.md'>- things_ive_read.md</a>
+	</div>
     <div id="blogs">
 
-<h3>Blockchains and Merkel trees</h3><br>Prereqs:<br>- Hashing<br>- Linked List<br><br>You need a blockchain for success. It's a simple fact of life. This article will tell you what one is, and how to make one.<br><br>A linked list is a value, and a pointer to the next list (or some "end of list", which is often written as None, Nil, or []).<br><pre><code class='language-haskell'>-- Linked list with values of type "a" in Haskell
+<a name='13-03-2024-blockchain-basics.md'></a><h3>Blockchains and Merkel trees</h3><br>Prereqs:<br>- Hashing<br>- Linked List<br><br>You need a blockchain for success. It's a simple fact of life. This article will tell you what one is, and how to make one.<br><br>A linked list is a value, and a pointer to the next list (or some "end of list", which is often written as None, Nil, or []).<br><pre><code class='language-haskell'>-- Linked list with values of type "a" in Haskell
 data LinkedList a = Node {val :: a, next :: LinkedList a}
                   | EndOfList
 
@@ -49,6 +52,10 @@ validate chain = go chain 0 -- Valid chains start with 0
 validate (Node "Sam" 0 (Node "Ron" 33 (EndNode 6)))
 -- False, hash "Ron" is 47, not 6
 </code></pre><br>This means that if we know the hash in the EndNode, we can be confident in validating the whole chain. You'll notice that validating a blockchain requires looking at every node (if the validation doesn't exit on a failure early). To prevent this, in real usecases, people use alternative data structures, like Merkel trees, which can be validated by only looking at <code>log n</code> nodes.
+<hr>
+<a name='29-03-2024-social-media-and-lobbies.md'></a><h3>Social media</h3><br>I watched a video today about the power the Israel lobby has over American politicians, and how AIPAC (American Israel Public Affairs Committee) has had people within the US Government in charge of Foreign Policy. Here is the video:<br><br>https://www.youtube.com/watch?v=YZdpIRMZoSw<br><br>It really made me realise how privileged we are to be living in an age of social media, where the views of people are not shaped by centralised organisations who control media (e.g. traditional newspapers and TV channels), but by the decentralised diffusion of content made by individuals and teams all around the world which is then doled out by "the algorithm" according to how well the content will capture attention.<br><br>The beauty of "the algorithm" is that it continually must experiment - it is adaptive, not frozen in time, or held down by a higher authority (*worth exploring how it may be held down by a higher authority later). This means that individuals sometimes see random videos which are not similar to the others which they usually watch (e.g. today I also watched a video of an Eastern-European design professor making a lamp out of thin plywood using a laser cutter like we used at school).<br><br>This prevents any one ideology from completely taking hold without criticism - as long as there is at least one individual willing to put in the work to publish a critical piece, there will be an opportunity for that piece to propagate. Controversy attracts attention [1], so there is a living chance that the critique will be caught by those with an open mind, who will then have the opportunity of a balanced opinion where both sides may be empathised with.<br><br>I hope that we can build a model of social media where this strength is preserved yet the dulling and polarising effects of attention-as-a-score oriented algorithms on people's minds are reduced.<br><br>[1] This is actually more controversial than I thought writing this the first time. Here is what the marketers think:<br>https://core.ac.uk/reader/214210540<br>https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1528077<br>Both papers show an "inverted U" relation between controversy/anger and engagement. In other words, controversial articles do better until they get too controversial.
+<hr>
+<a name='things_ive_read.md'></a><h3>Things I've read</h3><br>Essay by Djikstra on computing and how he views the craft of creating programs<br>https://www.cs.utexas.edu/~EWD/transcriptions/EWD10xx/EWD1036.html<br><br>Haskell State of the Union (What it succeeds and fails at)<br>https://github.com/Gabriella439/post-rfc/blob/main/sotu.md<br><br>"The fool does at last what the wise man does at once."
 
 	</div>
 	</div>

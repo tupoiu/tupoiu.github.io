@@ -81,6 +81,11 @@ h2 {
     margin: 1rem;
 }
 
+#blog-contents {
+    margin: 1rem;
+    text-align: left;
+}
+
 #blog-container {
     width: 50%;
     margin: auto;
