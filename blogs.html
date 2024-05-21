@@ -15,11 +15,11 @@
 	<h1>Blogs</h1>
 	<div id="blog-container">
 	<div id="blog-contents">
-<a href='#13-03-2024-blockchain-basics.md'>- 13-03-2024-blockchain-basics.md</a><br><a href='#29-03-2024-social-media-and-lobbies.md'>- 29-03-2024-social-media-and-lobbies.md</a><br><a href='#things_ive_read.md'>- things_ive_read.md</a>
+<a href='#2024-03-13-blockchain-basics.md'>- 2024-03-13-blockchain-basics.md</a><br><a href='#2024-03-29-social-media-and-lobbies.md'>- 2024-03-29-social-media-and-lobbies.md</a><br><a href='#2024-04-26-log-fibonacci.md'>- 2024-04-26-log-fibonacci.md</a><br><a href='#things_ive_read.md'>- things_ive_read.md</a>
 	</div>
     <div id="blogs">
 
-<a name='13-03-2024-blockchain-basics.md'></a><h3>Blockchains and Merkel trees</h3><br>Prereqs:<br>- Hashing<br>- Linked List<br><br>You need a blockchain for success. It's a simple fact of life. This article will tell you what one is, and how to make one.<br><br>A linked list is a value, and a pointer to the next list (or some "end of list", which is often written as None, Nil, or []).<br><pre><code class='language-haskell'>-- Linked list with values of type "a" in Haskell
+<a name='2024-03-13-blockchain-basics.md'></a><h3>Blockchains and Merkel trees</h3><br>Prereqs:<br>- Hashing<br>- Linked List<br><br>You need a blockchain for success. It's a simple fact of life. This article will tell you what one is, and how to make one.<br><br>A linked list is a value, and a pointer to the next list (or some "end of list", which is often written as None, Nil, or []).<br><pre><code class='language-haskell'>-- Linked list with values of type "a" in Haskell
 data LinkedList a = Node {val :: a, next :: LinkedList a}
                   | EndOfList
 
@@ -53,9 +53,63 @@ validate (Node "Sam" 0 (Node "Ron" 33 (EndNode 6)))
 -- False, hash "Ron" is 47, not 6
 </code></pre><br>This means that if we know the hash in the EndNode, we can be confident in validating the whole chain. You'll notice that validating a blockchain requires looking at every node (if the validation doesn't exit on a failure early). To prevent this, in real usecases, people use alternative data structures, like Merkel trees, which can be validated by only looking at <code>log n</code> nodes.
 <hr>
-<a name='29-03-2024-social-media-and-lobbies.md'></a><h3>Social media</h3><br>I watched a video today about the power the Israel lobby has over American politicians, and how AIPAC (American Israel Public Affairs Committee) has had people within the US Government in charge of Foreign Policy. Here is the video:<br><br>https://www.youtube.com/watch?v=YZdpIRMZoSw<br><br>It really made me realise how privileged we are to be living in an age of social media, where the views of people are not shaped by centralised organisations who control media (e.g. traditional newspapers and TV channels), but by the decentralised diffusion of content made by individuals and teams all around the world which is then doled out by "the algorithm" according to how well the content will capture attention.<br><br>The beauty of "the algorithm" is that it continually must experiment - it is adaptive, not frozen in time, or held down by a higher authority (*worth exploring how it may be held down by a higher authority later). This means that individuals sometimes see random videos which are not similar to the others which they usually watch (e.g. today I also watched a video of an Eastern-European design professor making a lamp out of thin plywood using a laser cutter like we used at school).<br><br>This prevents any one ideology from completely taking hold without criticism - as long as there is at least one individual willing to put in the work to publish a critical piece, there will be an opportunity for that piece to propagate. Controversy attracts attention [1], so there is a living chance that the critique will be caught by those with an open mind, who will then have the opportunity of a balanced opinion where both sides may be empathised with.<br><br>I hope that we can build a model of social media where this strength is preserved yet the dulling and polarising effects of attention-as-a-score oriented algorithms on people's minds are reduced.<br><br>[1] This is actually more controversial than I thought writing this the first time. Here is what the marketers think:<br>https://core.ac.uk/reader/214210540<br>https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1528077<br>Both papers show an "inverted U" relation between controversy/anger and engagement. In other words, controversial articles do better until they get too controversial.
+<a name='2024-03-29-social-media-and-lobbies.md'></a><h3>Social media</h3><br>I watched a video today about the power the Israel lobby has over American politicians, and how AIPAC (American Israel Public Affairs Committee) has had people within the US Government in charge of Foreign Policy. Here is the video:<br><br>https://www.youtube.com/watch?v=YZdpIRMZoSw<br><br>It really made me realise how privileged we are to be living in an age of social media, where the views of people are not shaped by centralised organisations who control media (e.g. traditional newspapers and TV channels), but by the decentralised diffusion of content made by individuals and teams all around the world which is then doled out by "the algorithm" according to how well the content will capture attention.<br><br>The beauty of "the algorithm" is that it continually must experiment - it is adaptive, not frozen in time, or held down by a higher authority (*worth exploring how it may be held down by a higher authority later). This means that individuals sometimes see random videos which are not similar to the others which they usually watch (e.g. today I also watched a video of an Eastern-European design professor making a lamp out of thin plywood using a laser cutter like we used at school).<br><br>This prevents any one ideology from completely taking hold without criticism - as long as there is at least one individual willing to put in the work to publish a critical piece, there will be an opportunity for that piece to propagate. Controversy attracts attention [1], so there is a living chance that the critique will be caught by those with an open mind, who will then have the opportunity of a balanced opinion where both sides may be empathised with.<br><br>I hope that we can build a model of social media where this strength is preserved yet the dulling and polarising effects of attention-as-a-score oriented algorithms on people's minds are reduced.<br><br>[1] This is actually more controversial than I thought writing this the first time. Here is what the marketers think:<br>https://core.ac.uk/reader/214210540<br>https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1528077<br>Both papers show an "inverted U" relation between controversy/anger and engagement. In other words, controversial articles do better until they get too controversial.
 <hr>
-<a name='things_ive_read.md'></a><h3>Things I've read</h3><br>Essay by Djikstra on computing and how he views the craft of creating programs<br>https://www.cs.utexas.edu/~EWD/transcriptions/EWD10xx/EWD1036.html<br><br>Haskell State of the Union (What it succeeds and fails at)<br>https://github.com/Gabriella439/post-rfc/blob/main/sotu.md<br><br>"The fool does at last what the wise man does at once."
+<a name='2024-04-26-log-fibonacci.md'></a><h3>A logarithmic algorithm for Fibonacci numbers</h3><br>I've been reading the book Structure and Interpretation of Computer Programs (Abelson, Sussman), and within it, I found a beautiful algorithm for the Fibonacci numbers.<br><br>The intuitive relation for the Fibonacci numbers is:<br><pre><code class='language-haskell'>-- Haskell code
+fib 0 = 1
+fib 1 = 1
+fib n = fib (n-1) + fib (n-2)
+</code></pre><br>While it is amazing that this code snippet runs correctly in Haskell, unfortunately, this way of doing recursion is in general slow. Let's expand a few terms for `n = 4`.<br><pre><code class='language-haskell'>fib 4 = fib 3                 + fib 2
+fib 4 = fib 2         + fib 1 + fib 1 + fib 0
+fib 4 = fib 1 + fib 0 + 1     + 1     + 1
+fib 4 = 1     + 1     + 1     + 1     + 1
+</code></pre><br>The number of operations quickly grows with `n` - faster than `O(n)`. You may be thinking, "why can't we just reuse the result for `fib 2`? Why not memoise/cache the results?"<br>We can do better. by caching in place. Consider the Fibonacci sequence as a child of a function like this:<br><pre><code class='language-haskell'>fibNext (a, b) = (a + b, a)
+</code></pre><br>Try transforming this quickly into an algorithm yourself.<br>.  <br>.  <br>.  <br>.  <br>.  <br>Ok, here's mine:<br><pre><code class='language-haskell'>fib n = fibIter 1 1 n
+
+fibIter _ b 0 = b
+fibIter a b n = fibIter (a + b) a (n - 1)
+</code></pre><br>Now, we have `O(1)` memory usage and `O(n)` time complexity.<br>But... this isn't even close to the best algorithm. <br><br>Let's do some experiments.<br><code>
+(a, b)
+(a + b, a)
+(2a + b, a + b)
+(3a + 2b, 2a + b)
+(5a + 3b, 3a + 2b)
+(8a + 5b, 5a + 3b)
+</code><br>At each successive fibNext, we seem to be producing the Fibonacci sequence within the coefficients. Notice how the middle 2 coefficients always match. Writing these transformations as matrices, we get:<br><code>
+|1 1| * |a|
+|1 0|   |b|
+...
+|8 5| * |a|
+|5 3|   |b|
+</code><br>Calling our first matrix `T`, we can hypothesise a form for any `T^n`. Try and guess the form, keeping in mind the original Fibonacci relation `fib n = fib (n - 1) + fib (n - 2)`.<br>.  <br>.  <br>.  <br>.  <br>.  <br>.  <br>.  <br>Ok, the form of `T^n` is:<br><code>
+|(p + q) q|
+|   q    p|
+</code><br>You can prove by induction that any `T^n` will be of this form. Using this, we can get a formula for `(T^n)^2`. You may be starting to get an inkling of how to improve the algorithm now... think `2^8 = (2^4)^2 = ((2^2)^2)^2 = ...`.<br>So, if:<br><code>
+T^n = |(p + q) q|
+      |   q    p|
+</code><br>Then:<br><code>
+T^(2n) = |(p + q) q| |(p + q) q| 
+         |   q    p| |   q    p|
+       
+       = |(p^2 + 2pq + 2q^2) (    2pq + q^2)|
+         |(      2pq +  q^2) (p^2     + q^2)|
+</code><br>Try and work from here to find the algorithm yourself!  <br><br>Hint: The time complexity is `O(log n)`. Try and write a logarithmic time exponentiation algorithm first using `(b^(n/2))^2 = b^n`!  <br>.  <br>.  <br>.  <br>.  <br>Hint 2: Write a function `fibIterT` of so that:<br><pre><code class='language-haskell'>fibIterT p q a b n =
+  |(p + q) q| ^n |a|
+  |   q    p|    |b|
+</code></pre><br>Ok, here it is:<br><pre><code class='language-haskell'>fibIterT _ _ a b 0 = b
+fibIterT p q a b n
+  | even n = fibIterT p' q' a b (n `div` 2)
+  | otherwise = fibIterT p q a' b' (n - 1)
+  where
+    a' = (p+q)*a + q*b
+    b' = q*a + p*b
+    p' = p^2 + q^2
+    q' = 2*p*q + q^2
+
+fib n = fibIterT 0 1 1 1 n
+</code></pre><br>Hopefully you can see where `p'` and `q'` come from. If you have an odd n, you can just multiply by your pq matrix once, and you'll be back to an even n. This is the origin of `a'` and `b'`, `pq_matrix (a, b) = (a', b')`.<br><br>SICP has been really interesting so far. I can finally see why people enjoy writing Lisp, even if it is horrendously ugly - it's very simple, and all the brackets make sure that you're never confused about operator precedence!
+<hr>
+<a name='things_ive_read.md'></a><h3>Things I've read</h3><br>Essay by Djikstra on computing and how he views the craft of creating programs<br>https://www.cs.utexas.edu/~EWD/transcriptions/EWD10xx/EWD1036.html<br><br>Haskell State of the Union (What it succeeds and fails at)<br>https://github.com/Gabriella439/post-rfc/blob/main/sotu.md<br><br>Game tooling for Tomorrow Corporation (amazing hot reloading, debugger)<br>https://www.youtube.com/watch?v=72y2EC5fkcE<br><br>Hindley Milner Type inference implementation in ML<br>https://okmij.org/ftp/ML/generalization/sound_eager.ml<br><br>"The fool does at last what the wise man does at once."
 
 	</div>
 	</div>

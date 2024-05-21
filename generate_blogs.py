@@ -2,7 +2,9 @@ import os
 import re
 
 blogs = []
-blog_paths = [path for path in os.listdir("blogs") if path.endswith(".md")]
+blog_paths = [path for path in os.listdir("blogs") 
+              if path.endswith(".md") 
+              and not path.startswith("_")]
 for blog_path in blog_paths:
     with open(f"blogs/{blog_path}") as file:
         content = file.read()
