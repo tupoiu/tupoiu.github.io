@@ -13,9 +13,11 @@
 
 	<script>hljs.highlightAll();</script>
 	<h1>Blogs</h1>
+	<input id="searchbox" placeholder="Search text..."></input>
+	<div id="searchresultsbox"></div>
 	<div id="blog-container">
 	<div id="blog-contents">
-<a href='#2024-03-13-blockchain-basics.md'>- 2024-03-13-blockchain-basics.md</a><br><a href='#2024-03-29-social-media-and-lobbies.md'>- 2024-03-29-social-media-and-lobbies.md</a><br><a href='#2024-04-26-log-fibonacci.md'>- 2024-04-26-log-fibonacci.md</a><br><a href='#things_ive_read.md'>- things_ive_read.md</a>
+<a href='#2024-03-13-blockchain-basics.md'>- 2024-03-13-blockchain-basics.md</a><br><a href='#2024-03-29-social-media-and-lobbies.md'>- 2024-03-29-social-media-and-lobbies.md</a><br><a href='#2024-04-26-log-fibonacci.md'>- 2024-04-26-log-fibonacci.md</a><br><a href='#2024-05-25-takeaways-from-100-games.md'>- 2024-05-25-takeaways-from-100-games.md</a><br><a href='#things_ive_read.md'>- things_ive_read.md</a>
 	</div>
     <div id="blogs">
 
@@ -109,6 +111,8 @@ fibIterT p q a b n
 fib n = fibIterT 0 1 1 1 n
 </code></pre><br>Hopefully you can see where `p'` and `q'` come from. If you have an odd n, you can just multiply by your pq matrix once, and you'll be back to an even n. This is the origin of `a'` and `b'`, `pq_matrix (a, b) = (a', b')`.<br><br>SICP has been really interesting so far. I can finally see why people enjoy writing Lisp, even if it is horrendously ugly - it's very simple, and all the brackets make sure that you're never confused about operator precedence!
 <hr>
+<a name='2024-05-25-takeaways-from-100-games.md'></a><h3>Takeaways from 100 games</h3><br>Mark Brown from GMTK recently released a video called "The 100 Games That Taught Me Game Design". Here are some of my takeaways.<br><br>#<h3>Tetris and diagetic difficulty</h3>In Tetris, you place down blocks as well as you can to survive and to make your future easier. The amazing thing about Tetris, however, is that the difficulty is caused almost entirely by the player.<br><br>When you place down a block shoddily, that block remains on your screen for the whole game, until you finally manage to expensively repair the operation by entirely filling up the line which your mistake was on. If you make more mistakes, the old blunders can be forgotten temporarily, buried under the new shape of your board. But if you manage to reckon with your newer mistakes, you will finally be reunited with the older ones, after having had some time to think about them.<br><br>This process naturally creates a story where the player makes their own nemesis, deals with its minions, and then has to try and face it again, with their new ideas about how to defeat it. What a "foil" that is - your nemesis is literally your own past errors.<br><br>#<h3>Plants Vs Zombies</h3>"If you're ever unsure about how a genre works, find a game that boils it down to its absolute essentials, and start there"<br><br>#<h3>Civilisation 5</h3>"It's easier to grok a game about egyptians, bananas, and warplanes than it is to grok a game about Protoss, vespene gas, and photon cannons"<br><br>#<h3>Inscryption</h3>...
+<hr>
 <a name='things_ive_read.md'></a><h3>Things I've read</h3><br>Essay by Djikstra on computing and how he views the craft of creating programs<br>https://www.cs.utexas.edu/~EWD/transcriptions/EWD10xx/EWD1036.html<br><br>Haskell State of the Union (What it succeeds and fails at)<br>https://github.com/Gabriella439/post-rfc/blob/main/sotu.md<br><br>Game tooling for Tomorrow Corporation (amazing hot reloading, debugger)<br>https://www.youtube.com/watch?v=72y2EC5fkcE<br><br>Hindley Milner Type inference implementation in ML<br>https://okmij.org/ftp/ML/generalization/sound_eager.ml<br><br>"The fool does at last what the wise man does at once."
 
 	</div>
@@ -119,4 +123,5 @@ fib n = fibIterT 0 1 1 1 n
 	</div>
 	<p id="footer">&copy; Peter Job 2022</p>
 </body>
+<script src="typescript/dist/text_search.js"></script>
 </html>

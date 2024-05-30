@@ -1,17 +1,19 @@
 import os
 import re
 
+# Get all markdown files in the blogs folder,
+# ignoring those which start with underscore.
 blogs = []
 blog_paths = [path for path in os.listdir("blogs") 
               if path.endswith(".md") 
               and not path.startswith("_")]
 for blog_path in blog_paths:
-    with open(f"blogs/{blog_path}") as file:
-        content = file.read()
-        blogs.append(content)
+    content = open(f"blogs/{blog_path}").read()
+    blogs.append(content)
 
 template = open("blog_template.html").read()
 
+# Replace markdown with HTML tags
 def compile_markdown(markdown: str):
     out = markdown
     out = re.sub("## (.+?)\n", r"<h3>\1</h3>", out)
@@ -29,6 +31,8 @@ assert compile_markdown("```hello```") == "<code>hello</code>"
 
 blogs = map(compile_markdown, blogs)
 
+# Create the contents page at the top of the
+# blog which links to each blog on the page
 blog_contents = map(lambda name: f"<a href='#{name}'>- {name}</a>", blog_paths)
 blogs_with_anchors = [f"<a name='{name}'></a>{blog}"
                        for (name, blog) in zip(blog_paths, blogs)]
