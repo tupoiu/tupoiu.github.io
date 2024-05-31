@@ -37,7 +37,7 @@
     let r = Math.min(idx + padding, content.length - 1);
     let nextNewlinePos = content.indexOf("\n", idx);
     if (nextNewlinePos > idx) {
-      r = Math.min(r, nextNewlinePos - 1);
+      r = Math.min(r, nextNewlinePos);
     }
     let lastNewlinePos = content.substring(0, idx).lastIndexOf("\n");
     if (lastNewlinePos > l) {

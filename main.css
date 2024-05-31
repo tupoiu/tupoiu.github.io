@@ -87,9 +87,44 @@ h2 {
 }
 
 #blog-container {
+    /* width: 50%; */
+    /* margin: auto; */
+    display: flexbox;
+    background: #FFFFFF;
+    opacity: 0.9;
+}
+
+#blog-container h4 {
+    margin: initial;
+}
+
+#blog-container a:hover {
+    animation: pulsate 3s infinite;
+}
+
+.transpanel{
     width: 50%;
     margin: auto;
     display: flexbox;
+    background: #FFFFFF;
+    opacity: 0.8;
+}
+
+#shader {
+    position: fixed;
+    z-index: 0;
+    width:100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.foreground {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width:100%;    
 }
 
 code {

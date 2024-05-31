@@ -11,25 +11,29 @@
 	<!-- and it's easy to individually load additional languages -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/haskell.min.js"></script>
 
-	<script>hljs.highlightAll();</script>
-	<h1>Blogs</h1>
-	<input id="searchbox" placeholder="Search text..."></input>
-	<div id="searchresultsbox"></div>
-	<div id="blog-container">
-	<div id="blog-contents">
-###BLOG-CONTENTS###
-	</div>
-    <div id="blogs">
-
-###BLOGS###
-
-	</div>
-	</div>
-	<div class="eop">
-		<a href="guitar.html" id="guitar-link">Guitar</a>
-		<a href="visuals.html">Visuals</a>
-	</div>
-	<p id="footer">&copy; Peter Job 2022</p>
+	<canvas id="shader"></canvas>
+	<div class="foreground"><div class="transpanel">
+		<script>hljs.highlightAll();</script>
+		<h1>Blogs</h1>
+		<input id="searchbox" placeholder="Search text..."></input>
+		<div id="searchresultsbox"></div>
+		<div id="blog-container">
+			<div id="blog-contents">
+				###BLOG-CONTENTS###
+			</div>
+			<div id="blogs">
+				
+				###BLOGS###
+				
+			</div>
+		</div>
+		<div class="eop">
+			<a href="guitar.html" id="guitar-link">Guitar</a>
+			<a href="visuals.html">Visuals</a>
+		</div>
+		<p id="footer">&copy; Peter Job 2022</p>
+	</div></div>
 </body>
 <script src="typescript/dist/text_search.js"></script>
+<script src="typescript/dist/shader-bg.js"></script>
 </html>

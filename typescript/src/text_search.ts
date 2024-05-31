@@ -44,7 +44,7 @@ function showReferences(toSearch: string, content: string, caseSensitive: boolea
     // Stop at newlines
     let nextNewlinePos = content.indexOf("\n", idx)
     if (nextNewlinePos > idx){
-        r = Math.min(r, nextNewlinePos - 1)
+        r = Math.min(r, nextNewlinePos)
     }
 
     let lastNewlinePos = content.substring(0, idx).lastIndexOf("\n")

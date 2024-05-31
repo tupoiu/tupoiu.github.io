@@ -16,7 +16,9 @@ template = open("blog_template.html").read()
 # Replace markdown with HTML tags
 def compile_markdown(markdown: str):
     out = markdown
+    out = re.sub("### (.+?)\n", r"<h4>\1</h4>", out)
     out = re.sub("## (.+?)\n", r"<h3>\1</h3>", out)
+    out = re.sub("https://(.+?)(\s)", r"<a href='https://\1'>https://\1</a>\2", out)
     out = re.sub(r"\n", r"<br>", out)
     out = re.sub(r"```(.*?)```",
                   lambda match:
@@ -28,6 +30,8 @@ def compile_markdown(markdown: str):
 
 # Inline testing!!!
 assert compile_markdown("```hello```") == "<code>hello</code>"
+assert compile_markdown("## Title\n") == "<h3>Title</h3>"
+assert compile_markdown("### Subtitle\n") == "<h4>Subtitle</h4>"
 
 blogs = map(compile_markdown, blogs)
 
