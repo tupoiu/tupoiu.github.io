@@ -12,4 +12,7 @@ https://www.youtube.com/watch?v=72y2EC5fkcE
 Hindley Milner Type inference implementation in ML
 https://okmij.org/ftp/ML/generalization/sound_eager.ml
 
+Collection of system design essays from LaoJi
+https://www.benkuhn.net/progessays/
+
 "The fool does at last what the wise man does at once."

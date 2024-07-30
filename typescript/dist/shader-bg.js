@@ -22790,7 +22790,7 @@ void main() {
     mat2 G = 0.3*mat2(vec2(-1.0, -0.5), vec2(0.2, 0.2));
     vec2 nrst = nearest_lattice_pt(uv, G);
     float r = mix(nrst.x, 1.0, 0.0);
-    float g = 1.0 - exp(-5.0* (log(1.1 + 2.0*length(mvel))*exp(-3.0 * length(offset))));
+    float g = 1.0 - exp(-5.0* (log(1.1 + 2.0*sqrt(length(mvel)))*exp(-10.0 * length(offset))));
     float b = mix(nrst.y, 0.7, 0.4);
     gl_FragColor = vec4(r, 0.2 + 0.8 * g, b, 1.0);
 }

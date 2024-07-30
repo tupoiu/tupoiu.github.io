@@ -16,10 +16,10 @@ fib 4 = fib 2         + fib 1 + fib 1 + fib 0
 fib 4 = fib 1 + fib 0 + 1     + 1     + 1
 fib 4 = 1     + 1     + 1     + 1     + 1
 ```
-The number of operations quickly grows with `n` - faster than `O(n)`. You may be thinking, "why can't we just reuse the result for `fib 2`? Why not memoise/cache the results?"
-We can do better. by caching in place. Consider the Fibonacci sequence as a child of a function like this:
+The number of operations quickly grows with `n` - worse than `O(n)`. You may be thinking, "why can't we just reuse the result for `fib 2`? Why not memoise/cache the results?"
+We can do better by caching in place. Consider the Fibonacci sequence as a child of a function like this:
 ```hs
-fibNext (a, b) = (a + b, a)
+fibNext a b = (a + b, a)
 ```
 Try transforming this quickly into an algorithm yourself.
 .  

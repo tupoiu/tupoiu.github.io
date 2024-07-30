@@ -7,6 +7,10 @@ blogs = []
 blog_paths = [path for path in os.listdir("blogs") 
               if path.endswith(".md") 
               and not path.startswith("_")]
+
+# Start with the latest blog
+blog_paths = list(reversed(blog_paths))
+
 for blog_path in blog_paths:
     content = open(f"blogs/{blog_path}").read()
     blogs.append(content)

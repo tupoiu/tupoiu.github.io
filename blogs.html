@@ -19,45 +19,11 @@
 		<div id="searchresultsbox"></div>
 		<div id="blog-container">
 			<div id="blog-contents">
-				<a href='#2024-03-13-blockchain-basics.md'>- 2024-03-13-blockchain-basics.md</a><br><a href='#2024-03-29-social-media-and-lobbies.md'>- 2024-03-29-social-media-and-lobbies.md</a><br><a href='#2024-04-26-log-fibonacci.md'>- 2024-04-26-log-fibonacci.md</a><br><a href='#2024-05-25-takeaways-from-100-games.md'>- 2024-05-25-takeaways-from-100-games.md</a><br><a href='#things_ive_read.md'>- things_ive_read.md</a>
+				<a href='#2024-05-25-takeaways-from-100-games.md'>- 2024-05-25-takeaways-from-100-games.md</a><br><a href='#2024-04-26-log-fibonacci.md'>- 2024-04-26-log-fibonacci.md</a><br><a href='#2024-03-29-social-media-and-lobbies.md'>- 2024-03-29-social-media-and-lobbies.md</a><br><a href='#2024-03-13-blockchain-basics.md'>- 2024-03-13-blockchain-basics.md</a><br><a href='#+things_ive_read.md'>- +things_ive_read.md</a>
 			</div>
 			<div id="blogs">
 				
-				<a name='2024-03-13-blockchain-basics.md'></a><h3>Blockchains and Merkel trees</h3><br>Prereqs:<br>- Hashing<br>- Linked List<br><br>You need a blockchain for success. It's a simple fact of life. This article will tell you what one is, and how to make one.<br><br>A linked list is a value, and a pointer to the next list (or some "end of list", which is often written as None, Nil, or []).<br><pre><code class='language-haskell'>-- Linked list with values of type "a" in Haskell
-data LinkedList a = Node {val :: a, next :: LinkedList a}
-                  | EndOfList
-
--- The same thing written more concisely
-data List a = Cons a (List a)
-            | Nil
-</code></pre><br><br>A blockchain is very similar, but as well as storing the value of a node and the pointer to the next list, we store a the *hash* of the value of the previous node. <br><br>Say you wanted to have a blockchain with a list of names of people who you have high fived, whilst ensuring that no one could falsely claim that you'd high fived them by modifying the earlier elements of the list. You could store the names as a blockchain.<br><br><pre><code class='language-haskell'>hash :: String -> Int
-hash = (`mod` 128) . sum . map fromEnum
-
-data Blockchain = Node String Int Blockchain
-                | EndNode Int
-                deriving Show -- To be able print the data in Haskell
-</code></pre><br><br>Looks pretty similar to the linked list from earlier... We will store the hash of each string value as an Int for ease of use. So can we create a blockchain from a list of strings?<br><br><pre><code class='language-haskell'>fromList :: [String] -> Blockchain
-fromList xs = fromListAux xs 0
-    where
-        fromListAux [] prevHash = EndNode prevHash
-        fromListAux (h:t) prevHash = Node h prevHash (fromListAux t (hash h))
-</code></pre><br><br>In Haskell <code>(h:t)</code> is a pattern matching on the first element of the list (the "head") and the rest (the "tail"). So what would an example blockchain look like?<br><br><pre><code class='language-haskell'>exampleBlockchain = fromList ["Sam", "Rich"]
--- Node "Sam" 0 (Node "Rich" 33 (EndNode 6))
-</code></pre><br>Note that <code>hash "Sam" == 33</code> and <code>hash "Rich" == 6</code>. If anyone tries to mess with the names in the list, say by inserting a new one, then the chance that the EndNode will be valid is very unlikely.<br><br><pre><code class='language-haskell'>validate :: Blockchain -> Bool
-validate (EndNode 0) = True
-validate (EndNode _) = False
-validate chain = go chain 0 -- Valid chains start with 0
-    where
-        go (Node val expectedHash rest) prevHash = (expectedHash == prevHash) && go rest (hash val)
-        go (EndNode lastHash) expectedHash = lastHash == expectedHash
-</code></pre><br>This validate function lets us check whether the hashes of each node line up.<br><pre><code class='language-haskell'>validate (Node "Sam" 0 (Node "Rich" 33 (EndNode 6)))
--- True
-
-validate (Node "Sam" 0 (Node "Ron" 33 (EndNode 6)))
--- False, hash "Ron" is 47, not 6
-</code></pre><br>This means that if we know the hash in the EndNode, we can be confident in validating the whole chain. You'll notice that validating a blockchain requires looking at every node (if the validation doesn't exit on a failure early). To prevent this, in real usecases, people use alternative data structures, like Merkel trees, which can be validated by only looking at <code>log n</code> nodes.
-<hr>
-<a name='2024-03-29-social-media-and-lobbies.md'></a><h3>Social media</h3><br>I watched a video today about the power the Israel lobby has over American politicians, and how AIPAC (American Israel Public Affairs Committee) has had people within the US Government in charge of Foreign Policy. Here is the video:<br><br><a href='https://www.youtube.com/watch?v=YZdpIRMZoSw'>https://www.youtube.com/watch?v=YZdpIRMZoSw</a><br><br>It really made me realise how privileged we are to be living in an age of social media, where the views of people are not shaped by centralised organisations who control media (e.g. traditional newspapers and TV channels), but by the decentralised diffusion of content made by individuals and teams all around the world which is then doled out by "the algorithm" according to how well the content will capture attention.<br><br>The beauty of "the algorithm" is that it continually must experiment - it is adaptive, not frozen in time, or held down by a higher authority (*worth exploring how it may be held down by a higher authority later). This means that individuals sometimes see random videos which are not similar to the others which they usually watch (e.g. today I also watched a video of an Eastern-European design professor making a lamp out of thin plywood using a laser cutter like we used at school).<br><br>This prevents any one ideology from completely taking hold without criticism - as long as there is at least one individual willing to put in the work to publish a critical piece, there will be an opportunity for that piece to propagate. Controversy attracts attention [1], so there is a living chance that the critique will be caught by those with an open mind, who will then have the opportunity of a balanced opinion where both sides may be empathised with.<br><br>I hope that we can build a model of social media where this strength is preserved yet the dulling and polarising effects of attention-as-a-score oriented algorithms on people's minds are reduced.<br><br>[1] This is actually more controversial than I thought writing this the first time. Here is what the marketers think:<br><a href='https://core.ac.uk/reader/214210540'>https://core.ac.uk/reader/214210540</a><br><a href='https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1528077'>https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1528077</a><br>Both papers show an "inverted U" relation between controversy/anger and engagement. In other words, controversial articles do better until they get too controversial.
+				<a name='2024-05-25-takeaways-from-100-games.md'></a><h3>Takeaways from 100 games</h3><br>Mark Brown from GMTK recently released a video called "The 100 Games That Taught Me Game Design". Here are some of my takeaways.<br><br><h4>Tetris and diagetic difficulty</h4>In Tetris, you place down blocks as well as you can to survive and to make your future easier. The amazing thing about Tetris, however, is that the difficulty is caused almost entirely by the player.<br><br>When you place down a block shoddily, that block remains on your screen for the whole game, until you finally manage to expensively repair the operation by entirely filling up the line which your mistake was on. If you make more mistakes, the old blunders can be forgotten temporarily, buried under the new shape of your board. But if you manage to reckon with your newer mistakes, you will finally be reunited with the older ones, after having had some time to think about them.<br><br>This process naturally creates a story where the player makes their own nemesis, deals with its minions, and then has to try and face it again, with their new ideas about how to defeat it. What a "foil" that is - your nemesis is literally your own past errors.<br><br><h4>Plants Vs Zombies</h4>"If you're ever unsure about how a genre works, find a game that boils it down to its absolute essentials, and start there"<br><br><h4>Civilisation 5</h4>"It's easier to grok a game about egyptians, bananas, and warplanes than it is to grok a game about Protoss, vespene gas, and photon cannons"
 <hr>
 <a name='2024-04-26-log-fibonacci.md'></a><h3>A logarithmic algorithm for Fibonacci numbers</h3><br>I've been reading the book Structure and Interpretation of Computer Programs (Abelson, Sussman), and within it, I found a beautiful algorithm for the Fibonacci numbers.<br><br>The intuitive relation for the Fibonacci numbers is:<br><pre><code class='language-haskell'>-- Haskell code
 fib 0 = 1
@@ -67,7 +33,7 @@ fib n = fib (n-1) + fib (n-2)
 fib 4 = fib 2         + fib 1 + fib 1 + fib 0
 fib 4 = fib 1 + fib 0 + 1     + 1     + 1
 fib 4 = 1     + 1     + 1     + 1     + 1
-</code></pre><br>The number of operations quickly grows with `n` - faster than `O(n)`. You may be thinking, "why can't we just reuse the result for `fib 2`? Why not memoise/cache the results?"<br>We can do better. by caching in place. Consider the Fibonacci sequence as a child of a function like this:<br><pre><code class='language-haskell'>fibNext (a, b) = (a + b, a)
+</code></pre><br>The number of operations quickly grows with `n` - worse than `O(n)`. You may be thinking, "why can't we just reuse the result for `fib 2`? Why not memoise/cache the results?"<br>We can do better by caching in place. Consider the Fibonacci sequence as a child of a function like this:<br><pre><code class='language-haskell'>fibNext a b = (a + b, a)
 </code></pre><br>Try transforming this quickly into an algorithm yourself.<br>.  <br>.  <br>.  <br>.  <br>.  <br>Ok, here's mine:<br><pre><code class='language-haskell'>fib n = fibIter 1 1 n
 
 fibIter _ b 0 = b
@@ -113,9 +79,43 @@ fibIterT p q a b n
 fib n = fibIterT 0 1 1 1 n
 </code></pre><br>Hopefully you can see where `p'` and `q'` come from. If you have an odd n, you can just multiply by your pq matrix once, and you'll be back to an even n. This is the origin of `a'` and `b'`, `pq_matrix (a, b) = (a', b')`.<br><br>SICP has been really interesting so far. I can finally see why people enjoy writing Lisp, even if it is horrendously ugly - it's very simple, and all the brackets make sure that you're never confused about operator precedence!
 <hr>
-<a name='2024-05-25-takeaways-from-100-games.md'></a><h3>Takeaways from 100 games</h3><br>Mark Brown from GMTK recently released a video called "The 100 Games That Taught Me Game Design". Here are some of my takeaways.<br><br><h4>Tetris and diagetic difficulty</h4>In Tetris, you place down blocks as well as you can to survive and to make your future easier. The amazing thing about Tetris, however, is that the difficulty is caused almost entirely by the player.<br><br>When you place down a block shoddily, that block remains on your screen for the whole game, until you finally manage to expensively repair the operation by entirely filling up the line which your mistake was on. If you make more mistakes, the old blunders can be forgotten temporarily, buried under the new shape of your board. But if you manage to reckon with your newer mistakes, you will finally be reunited with the older ones, after having had some time to think about them.<br><br>This process naturally creates a story where the player makes their own nemesis, deals with its minions, and then has to try and face it again, with their new ideas about how to defeat it. What a "foil" that is - your nemesis is literally your own past errors.<br><br><h4>Plants Vs Zombies</h4>"If you're ever unsure about how a genre works, find a game that boils it down to its absolute essentials, and start there"<br><br><h4>Civilisation 5</h4>"It's easier to grok a game about egyptians, bananas, and warplanes than it is to grok a game about Protoss, vespene gas, and photon cannons"
+<a name='2024-03-29-social-media-and-lobbies.md'></a><h3>Social media</h3><br>I watched a video today about the power the Israel lobby has over American politicians, and how AIPAC (American Israel Public Affairs Committee) has had people within the US Government in charge of Foreign Policy. Here is the video:<br><br><a href='https://www.youtube.com/watch?v=YZdpIRMZoSw'>https://www.youtube.com/watch?v=YZdpIRMZoSw</a><br><br>It really made me realise how privileged we are to be living in an age of social media, where the views of people are not shaped by centralised organisations who control media (e.g. traditional newspapers and TV channels), but by the decentralised diffusion of content made by individuals and teams all around the world which is then doled out by "the algorithm" according to how well the content will capture attention.<br><br>The beauty of "the algorithm" is that it continually must experiment - it is adaptive, not frozen in time, or held down by a higher authority (*worth exploring how it may be held down by a higher authority later). This means that individuals sometimes see random videos which are not similar to the others which they usually watch (e.g. today I also watched a video of an Eastern-European design professor making a lamp out of thin plywood using a laser cutter like we used at school).<br><br>This prevents any one ideology from completely taking hold without criticism - as long as there is at least one individual willing to put in the work to publish a critical piece, there will be an opportunity for that piece to propagate. Controversy attracts attention [1], so there is a living chance that the critique will be caught by those with an open mind, who will then have the opportunity of a balanced opinion where both sides may be empathised with.<br><br>I hope that we can build a model of social media where this strength is preserved yet the dulling and polarising effects of attention-as-a-score oriented algorithms on people's minds are reduced.<br><br>[1] This is actually more controversial than I thought writing this the first time. Here is what the marketers think:<br><a href='https://core.ac.uk/reader/214210540'>https://core.ac.uk/reader/214210540</a><br><a href='https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1528077'>https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1528077</a><br>Both papers show an "inverted U" relation between controversy/anger and engagement. In other words, controversial articles do better until they get too controversial.
 <hr>
-<a name='things_ive_read.md'></a><h3>Things I've read</h3><br>Essay by Djikstra on computing and how he views the craft of creating programs<br><a href='https://www.cs.utexas.edu/~EWD/transcriptions/EWD10xx/EWD1036.html'>https://www.cs.utexas.edu/~EWD/transcriptions/EWD10xx/EWD1036.html</a><br><br>Haskell State of the Union (What it succeeds and fails at)<br><a href='https://github.com/Gabriella439/post-rfc/blob/main/sotu.md'>https://github.com/Gabriella439/post-rfc/blob/main/sotu.md</a><br><br>Game tooling for Tomorrow Corporation (amazing hot reloading, debugger)<br><a href='https://www.youtube.com/watch?v=72y2EC5fkcE'>https://www.youtube.com/watch?v=72y2EC5fkcE</a><br><br>Hindley Milner Type inference implementation in ML<br><a href='https://okmij.org/ftp/ML/generalization/sound_eager.ml'>https://okmij.org/ftp/ML/generalization/sound_eager.ml</a><br><br>"The fool does at last what the wise man does at once."
+<a name='2024-03-13-blockchain-basics.md'></a><h3>Blockchains and Merkel trees</h3><br>Prereqs:<br>- Hashing<br>- Linked List<br><br>You need a blockchain for success. It's a simple fact of life. This article will tell you what one is, and how to make one.<br><br>A linked list is a value, and a pointer to the next list (or some "end of list", which is often written as None, Nil, or []).<br><pre><code class='language-haskell'>-- Linked list with values of type "a" in Haskell
+data LinkedList a = Node {val :: a, next :: LinkedList a}
+                  | EndOfList
+
+-- The same thing written more concisely
+data List a = Cons a (List a)
+            | Nil
+</code></pre><br><br>A blockchain is very similar, but as well as storing the value of a node and the pointer to the next list, we store a the *hash* of the value of the previous node. <br><br>Say you wanted to have a blockchain with a list of names of people who you have high fived, whilst ensuring that no one could falsely claim that you'd high fived them by modifying the earlier elements of the list. You could store the names as a blockchain.<br><br><pre><code class='language-haskell'>hash :: String -> Int
+hash = (`mod` 128) . sum . map fromEnum
+
+data Blockchain = Node String Int Blockchain
+                | EndNode Int
+                deriving Show -- To be able print the data in Haskell
+</code></pre><br><br>Looks pretty similar to the linked list from earlier... We will store the hash of each string value as an Int for ease of use. So can we create a blockchain from a list of strings?<br><br><pre><code class='language-haskell'>fromList :: [String] -> Blockchain
+fromList xs = fromListAux xs 0
+    where
+        fromListAux [] prevHash = EndNode prevHash
+        fromListAux (h:t) prevHash = Node h prevHash (fromListAux t (hash h))
+</code></pre><br><br>In Haskell <code>(h:t)</code> is a pattern matching on the first element of the list (the "head") and the rest (the "tail"). So what would an example blockchain look like?<br><br><pre><code class='language-haskell'>exampleBlockchain = fromList ["Sam", "Rich"]
+-- Node "Sam" 0 (Node "Rich" 33 (EndNode 6))
+</code></pre><br>Note that <code>hash "Sam" == 33</code> and <code>hash "Rich" == 6</code>. If anyone tries to mess with the names in the list, say by inserting a new one, then the chance that the EndNode will be valid is very unlikely.<br><br><pre><code class='language-haskell'>validate :: Blockchain -> Bool
+validate (EndNode 0) = True
+validate (EndNode _) = False
+validate chain = go chain 0 -- Valid chains start with 0
+    where
+        go (Node val expectedHash rest) prevHash = (expectedHash == prevHash) && go rest (hash val)
+        go (EndNode lastHash) expectedHash = lastHash == expectedHash
+</code></pre><br>This validate function lets us check whether the hashes of each node line up.<br><pre><code class='language-haskell'>validate (Node "Sam" 0 (Node "Rich" 33 (EndNode 6)))
+-- True
+
+validate (Node "Sam" 0 (Node "Ron" 33 (EndNode 6)))
+-- False, hash "Ron" is 47, not 6
+</code></pre><br>This means that if we know the hash in the EndNode, we can be confident in validating the whole chain. You'll notice that validating a blockchain requires looking at every node (if the validation doesn't exit on a failure early). To prevent this, in real usecases, people use alternative data structures, like Merkel trees, which can be validated by only looking at <code>log n</code> nodes.
+<hr>
+<a name='+things_ive_read.md'></a><h3>Things I've read</h3><br>Essay by Djikstra on computing and how he views the craft of creating programs<br><a href='https://www.cs.utexas.edu/~EWD/transcriptions/EWD10xx/EWD1036.html'>https://www.cs.utexas.edu/~EWD/transcriptions/EWD10xx/EWD1036.html</a><br><br>Haskell State of the Union (What it succeeds and fails at)<br><a href='https://github.com/Gabriella439/post-rfc/blob/main/sotu.md'>https://github.com/Gabriella439/post-rfc/blob/main/sotu.md</a><br><br>Game tooling for Tomorrow Corporation (amazing hot reloading, debugger)<br><a href='https://www.youtube.com/watch?v=72y2EC5fkcE'>https://www.youtube.com/watch?v=72y2EC5fkcE</a><br><br>Hindley Milner Type inference implementation in ML<br><a href='https://okmij.org/ftp/ML/generalization/sound_eager.ml'>https://okmij.org/ftp/ML/generalization/sound_eager.ml</a><br><br>Collection of system design essays from LaoJi<br><a href='https://www.benkuhn.net/progessays/'>https://www.benkuhn.net/progessays/</a><br><br>"The fool does at last what the wise man does at once."
 				
 			</div>
 		</div>
