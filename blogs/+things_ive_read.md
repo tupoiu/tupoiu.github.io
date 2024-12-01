@@ -15,4 +15,7 @@ https://okmij.org/ftp/ML/generalization/sound_eager.ml
 Collection of system design essays from LaoJi
 https://www.benkuhn.net/progessays/
 
+Command line function to start hosting the current working directory on localhost:8000
+```python -m http.server```
+
 "The fool does at last what the wise man does at once."
