@@ -102,6 +102,12 @@ h2 {
     animation: pulsate 3s infinite;
 }
 
+#blog-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Entire image visible, may leave gaps */
+}
+
 .transpanel{
     width: 50%;
     margin: auto;
